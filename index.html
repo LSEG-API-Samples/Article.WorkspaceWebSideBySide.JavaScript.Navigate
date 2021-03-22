@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>SxS Test Web App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this sample</noscript>
+    <script async src="https://cdn.refinitiv.com/public/libs/sxs-web/sxs-web-loader.js"></script>
+    <script>
+        function navigate(){
+			app = document.getElementById("app").value;
+			ric = document.getElementById("ric").value;
+			target = document.getElementById("target").value;
+            sxsWeb.navigate(app, sxsWeb.Context.ric(ric), target);
+        };
+     
+        window.SxsWeb = window.SxsWeb || [];
+        window.sxsWeb = window.sxsWeb || function () {
+            SxsWeb.push(arguments);
+        };
+        
+        // Uncomment next line if you are using private network
+        //sxsWeb ("config", "use-network", "private");
+        sxsWeb('config','context','both');//none, both, send, receive
+        sxsWeb("start", new Date());
+        sxsWeb("onLoad", (status) => {
+            if (status === 'ok') {
+                console.log("Sxs Web is loaded");
+                //enable test buttons
+                document.getElementById("navigateButton").removeAttribute("disabled");
+                document.getElementById("navigateButton").value = "Call navigate()";
+            }
+            else {
+                console.log("Some issue detected", status);
+            }
+        });
+   </script>
+   Navigate function:<br/><br/>
+   <pre>Application: <select name="app" id="app">
+		<option value="THOMSONREUTERS.REALTIME.QUOTELINE">Q:Quote</option>
+		<option value="KOxMNC">NEWS:News</option>
+		<option value="THOMSONREUTERS.CHARTS.FINANCIALCHART">CHT:Chart</option>
+		<option value="THOMSONREUTERS.REALTIME.THINMONITOR">MON:Monitor</option>
+		<option value="APPxINDUSTRY">INDUS:Industy</option>
+		<option value="THOMSONREUTERS.AIM.ROUTINES">RTNE:Routines</option>
+		<option value="APPxCALCALLQ">ALLQ:All Quotes</option>
+		<option value="APPxFXPOLLS">FXPOLLS:Fx Polls</option>
+		<option value="APPxCompanyOverview">OV:Company Overview</option>
+		<option value="EVzCORPxCORPACTCALENDAR">CACS:Corporate Actions</option>
+		<option value="GxHOME">HOME:Home Page</option>
+	</select></pre>
+	<pre>RIC: <input type="text" id="ric" value="IBM.N"></pre>
+    <pre>Target: <select name="target" id="target">
+		<option value="replace">replace</option>
+		<option value="popup">popup</option>
+		<option value="tab">tab</option>
+	</select></pre>	
+   <input type='button' id='navigateButton' disabled value='Not ready' onclick='navigate()'>
+   <br/><br/>
+</body>
+</html>
