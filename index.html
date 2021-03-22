@@ -9,9 +9,16 @@
     <script async src="https://cdn.refinitiv.com/public/libs/sxs-web/sxs-web-loader.js"></script>
     <script>
         function navigate(){
+			//prepare app, ric, target
+			//app is an application ID
+			//It is provided with sxsWeb.AppLibrary.<APP>
+			//such as sxsWeb.AppLibrary.ALLQ("APPxCALCALLQ") or sxsWeb.AppLibrary.OV("APPxCompanyOverview")
 			app = document.getElementById("app").value;
+			//ric is passed to sxsWeb.Content.ric(ric) to create its context in JSON format
 			ric = document.getElementById("ric").value;
+			//target is "replace" or "tab" or "popup"
 			target = document.getElementById("target").value;
+			
             sxsWeb.navigate(app, sxsWeb.Context.ric(ric), target);
         };
      
